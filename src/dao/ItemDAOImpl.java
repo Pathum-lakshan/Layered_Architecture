@@ -1,13 +1,41 @@
 package dao;
 
-import model.ItemDTO;
+import model.CustomerDTO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ItemDAOImpl implements ItemDAO {
+public class ItemDAOImpl implements CrudDAO {
+    @Override
+    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException {
+        return null;
+    }
 
+    @Override
+    public boolean saveCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean updateCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+/*
     @Override
     public ArrayList<ItemDTO> getAllItems() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item");
@@ -48,5 +76,5 @@ public class ItemDAOImpl implements ItemDAO {
         } else {
             return "I00-001";
         }
-    }
+    }*/
 }
