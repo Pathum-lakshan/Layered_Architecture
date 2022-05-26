@@ -31,6 +31,11 @@ public class OrderDAOImpl  implements CrudDAO<OrderDTO,String> {
     }
 
     @Override
+    public OrderDTO search(String s) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
     public boolean exist(String s) throws SQLException, ClassNotFoundException {
         return false;
     }
@@ -46,33 +51,5 @@ public class OrderDAOImpl  implements CrudDAO<OrderDTO,String> {
     }
 
 
-  /*  @Override
-    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException {
-        return null;
-    }
 
-    @Override
-    public boolean saveCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public boolean updateCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public String generateNewID() throws SQLException, ClassNotFoundException {
-        return null;
-    }*/
 }

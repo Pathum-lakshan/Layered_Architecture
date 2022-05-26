@@ -2,6 +2,7 @@ package dao;
 
 import model.CustomerDTO;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,6 +27,17 @@ public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String>{
     @Override
     public boolean update(CustomerDTO dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.executeUpdate("UPDATE Customer SET name=?, address=? WHERE id=?", dto.getName(), dto.getAddress(), dto.getId());
+    }
+
+    @Override
+    public CustomerDTO search(String s) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Customer WHERE id=?", s);
+
+        if (rst.next()){
+            return new CustomerDTO(rst.getString(1),rst.getString(2),rst.getString(3));
+        }else {
+            return null;
+        }
     }
 
     @Override
