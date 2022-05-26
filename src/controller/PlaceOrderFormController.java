@@ -40,6 +40,13 @@ import java.util.stream.Collectors;
 
 public class PlaceOrderFormController {
 
+    CrudDAO<CustomerDTO,String> customer = new CustomerDAOImpl();
+
+    CrudDAO<ItemDTO,String> items = new ItemDAOImpl();
+
+    CrudDAO<OrderDTO,String> order = new OrderDAOImpl();
+
+
     public AnchorPane root;
     public JFXButton btnPlaceOrder;
     public JFXTextField txtCustomerName;
@@ -108,8 +115,7 @@ public class PlaceOrderFormController {
                         }
 
                         //di?
-                        CrudDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
-                        CustomerDTO customerDTO = customerDAO.search(newValue+"");
+                        CustomerDTO customerDTO = customer.search(newValue+"");
 
                         txtCustomerName.setText(customerDTO.getName());
                     } catch (SQLException e) {
@@ -138,8 +144,8 @@ public class PlaceOrderFormController {
                     if (!existItem(newItemCode + "")) {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
-                   CrudDAO <ItemDTO,String> itemDAO =new ItemDAOImpl();
-                    ItemDTO item = itemDAO.search(newItemCode + "");
+
+                    ItemDTO item = items.search(newItemCode + "");
 
                     txtDescription.setText(item.getDescription());
                     txtUnitPrice.setText(item.getUnitPrice().setScale(2).toString());
@@ -185,24 +191,22 @@ public class PlaceOrderFormController {
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
 
-        CrudDAO <ItemDTO,String> itemDAO=new ItemDAOImpl();
 
-        return itemDAO.exist(code);
+
+        return items.exist(code);
 
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
 
-
-        CrudDAO <CustomerDTO,String> customerDAO = new CustomerDAOImpl();
-        return customerDAO.exist(id);
+        return customer.exist(id);
     }
 
     public String generateNewOrderId() {
         try {
-            CrudDAO<OrderDTO,String> orderDTO = new OrderDAOImpl();
 
-            orderDTO.generateNewID();
+
+            order.generateNewID();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new order id").show();
@@ -214,8 +218,8 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-            CrudDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
-            ArrayList<CustomerDTO> allCustomer = customerDAO.getAll();
+
+            ArrayList<CustomerDTO> allCustomer = customer.getAll();
 
             for (CustomerDTO customers: allCustomer
                  ) {
@@ -233,7 +237,6 @@ public class PlaceOrderFormController {
         try {
             /*Get all items*/
 
-            CrudDAO<ItemDTO,String> items = new ItemDAOImpl();
 
             ArrayList<ItemDTO> allItem = items.getAll();
 
@@ -405,12 +408,17 @@ public class PlaceOrderFormController {
 
     public ItemDTO findItem(String code) {
         try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
+            /*Connection connection = DBConnection.getDbConnection().getConnection();
             PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
             pstm.setString(1, code);
             ResultSet rst = pstm.executeQuery();
             rst.next();
             return new ItemDTO(code, rst.getString("description"), rst.getBigDecimal("unitPrice"), rst.getInt("qtyOnHand"));
+      */
+
+          return   items.search(code);
+
+
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
         } catch (ClassNotFoundException e) {
